@@ -1,5 +1,9 @@
 package com.omega.financeiro.resources;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,17 @@ public class TituloResource {
 
         logger.info("PORT: "+environment.getProperty("local.server.port"));
         
-        return new ResponseEntity<>("{\"response\": \"Title was moved successfully\"}",HttpStatus.ACCEPTED);
+        Map<String, String> map = new HashMap<>();
+        map.put("response", "Title was moved successfully");
+        
+        String json = "";
+        
+        try {
+            json = new ObjectMapper().writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            System.out.println(e);
+        }
+        
+        return new ResponseEntity<>(json, HttpStatus.ACCEPTED);
     }
 }

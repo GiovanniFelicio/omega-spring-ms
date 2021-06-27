@@ -8,10 +8,7 @@ package com.omega.faturamento.resources;
 import com.omega.faturamento.entities.NotaFiscal;
 import com.omega.faturamento.services.NotaFiscalService;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +56,12 @@ public class NotaFiscalResource {
     @GetMapping(value = "/faturar", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> faturar() {                
         
-        notaFiscalService.movimentarFinanceiro();
+        ResponseEntity<?> response;
         
-        return new ResponseEntity<>("Successfully", HttpStatus.OK);
+        response = notaFiscalService.movimentarFinanceiro();
+        
+        System.out.println("Deu certo: " + response);
+        
+        return response;
     }
 }
