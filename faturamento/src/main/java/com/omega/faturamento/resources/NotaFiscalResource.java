@@ -8,7 +8,11 @@ package com.omega.faturamento.resources;
 import com.omega.faturamento.entities.NotaFiscal;
 import com.omega.faturamento.services.NotaFiscalService;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +27,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ENGCARVALHO
  */
 
+@RefreshScope
 @RestController
 @RequestMapping(path = "/api/v1/notaFiscal", method = RequestMethod.GET)
 public class NotaFiscalResource {
+    
+    private static final Logger logger = LoggerFactory.getLogger(NotaFiscalResource.class);
+    
+    @Value("${test.config}")
+    public String tesConfig;
     
     @Autowired
     private NotaFiscalService notaFiscalService;
@@ -60,8 +70,14 @@ public class NotaFiscalResource {
         
         response = notaFiscalService.movimentarFinanceiro();
         
-        System.out.println("Deu certo: " + response);
-        
         return response;
+    }
+    
+    @GetMapping(value = "/configs", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> configs() {
+        
+        logger.info(tesConfig);
+        
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
