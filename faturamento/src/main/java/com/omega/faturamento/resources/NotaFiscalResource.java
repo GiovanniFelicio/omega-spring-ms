@@ -32,10 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api/v1/notaFiscal", method = RequestMethod.GET)
 public class NotaFiscalResource {
     
-    private static final Logger logger = LoggerFactory.getLogger(NotaFiscalResource.class);
-    
-    @Value("${test.config}")
-    public String tesConfig;
+    private static final Logger logger = LoggerFactory.getLogger(NotaFiscalResource.class);    
     
     @Autowired
     private NotaFiscalService notaFiscalService;
@@ -76,8 +73,8 @@ public class NotaFiscalResource {
     @GetMapping(value = "/configs", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> configs() {
         
-        logger.info(tesConfig);
+        ResponseEntity teste = notaFiscalService.teste();
         
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(teste.getBody(),HttpStatus.ACCEPTED);
     }
 }
