@@ -44,6 +44,9 @@ public class Categoria implements Serializable{
 
     @Column(name = "DESCRICAO")
     private String descricao;
+    
+    @Column(name = "PATH")
+    private String path;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CATEGORIA_SUPERIOR", referencedColumnName = "ID")
